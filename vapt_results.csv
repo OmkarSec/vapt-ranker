@@ -1,0 +1,9 @@
+rank,exploit_label,exploit_score,rank_score,severity,host,path,method,parameter,param_type,issue_type,confidence,cve_count,max_cvss,avg_cvss,url
+1,High,75.2,75.1,High,https://testphp.vulnweb.com,,GET,submit,query,SQL Injection,Certain,5,7.5,6.92,
+2,High,75.0,75.0,High,https://testphp.vulnweb.com,,GET,q,query,SQL Injection,Certain,5,7.5,6.92,
+3,High,72.5,73.5,High,https://testphp.vulnweb.com,,POST,token,body,SQL Injection (second order),Tentative,5,7.5,6.92,
+4,High,71.6,73.0,High,https://testphp.vulnweb.com,,POST,user_id,body,SQL Injection (second order),Tentative,5,7.5,6.92,
+5,High,71.6,73.0,High,https://testphp.vulnweb.com,,POST,email,body,SQL Injection (second order),Tentative,5,7.5,6.92,
+6,High,61.7,70.8,High,https://testphp.vulnweb.com,,GET,cat,query,Cross-site scripting (reflected),Firm,5,10.0,7.779999999999999,
+7,High,58.4,65.0,High,https://testphp.vulnweb.com,,GET,file,query,Path traversal,Firm,10,7.5,5.25,
+8,High,53.2,59.4,Medium,https://testphp.vulnweb.com,,GET,url,query,Open redirection (reflected),Certain,5,10.0,5.3,

